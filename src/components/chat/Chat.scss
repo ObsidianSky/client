@@ -1,0 +1,15 @@
+.chat-wrapper {
+  height: 100%;
+  background: url("background.jpg");
+  display: flex;
+}
+
+.chat {
+  flex: 1 0  auto;
+  padding: 20px;
+  overflow-y: auto;
+
+  .chat-message + .chat-message {
+    margin-top: 15px;
+  }
+}

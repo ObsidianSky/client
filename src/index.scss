@@ -5,9 +5,21 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.btn {
+  padding: .4em;
+  outline: none;
+  font-size: 15px;
+  border: 2px solid gray;
+
+  &:hover {
+    cursor: pointer;
+  }
 }

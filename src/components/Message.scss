@@ -1,0 +1,28 @@
+$background: #e6e6e6;
+
+.message {
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: $background;
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: -8px;
+    width: 0;
+    height: 0;
+    border-bottom: 14px solid $background;
+    border-left: 14px solid transparent;
+  }
+
+  .name {
+    font-size: 0.85em;
+    color: #5daee0;
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+}
