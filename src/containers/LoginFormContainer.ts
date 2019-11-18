@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import LoginForm, { LoginFormOutput, LoginFormProps } from "../components/login-form/LoginForm";
-import { userLogInAction } from '../features/user/user.actions';
+import { userLogInAction } from '../features/authentication/authentication.actions';
 import { StoreState } from '../rootReducer';
 
 const mapProps = (state: StoreState): Partial<LoginFormProps> => ({

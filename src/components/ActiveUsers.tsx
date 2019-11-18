@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {IdentifiableUser} from "../features/user/user.models";
+import {IdentifiableUser} from "../features/authentication/authentication.models";
 
 class ActiveUsers extends Component<{users: IdentifiableUser[]}> {
     render() {
