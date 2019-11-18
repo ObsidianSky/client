@@ -27,9 +27,13 @@ api.interceptors.response.use( (response) => {
 });
 
 export async function authenticate({email, password}: {email: string, password: string}): Promise<any> {
-    return await api.post('/authentication/authenticate', { email, password });
+    return await api.post('/user/authenticate', { email, password });
 }
 
-export async function getChatList(memberId: { memberId: string }): Promise<any> {
+export async function getChatList(memberId: string): Promise<any> {
     return await api.get(`/chat/${memberId}`);
+}
+
+export async function getUser(userId: string): Promise<any> {
+    return await api.get(`/user/${userId}`);
 }

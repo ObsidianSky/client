@@ -1,8 +1,9 @@
 import {combineReducers} from 'redux';
 import { connectRouter } from 'connected-react-router'
-import {authenticationReducer, AuthenticationState, UserState} from "./features/authentication/authentication.reducer";
+import { authenticationReducer, AuthenticationState}  from "./features/authentication/authentication.reducer";
 import { chatReducer, ChatState } from "./features/chat/chat.reducer";
 import { chatListReducer, ChatListState } from './features/chat-list/chat-list.reducer';
+import { userReducer, UserState } from './features/user/user.reducer';
 
 export interface StoreState {
     router: any,
@@ -18,4 +19,4 @@ export const createRootReducer = (history) => combineReducers({
     user: userReducer,
     chat: chatReducer,
     chatList: chatListReducer,
-});
+})
