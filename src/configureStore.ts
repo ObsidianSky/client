@@ -3,7 +3,7 @@ import { routerMiddleware } from 'connected-react-router'
 import { createBrowserHistory } from 'history'
 import { createRootReducer } from "./rootReducer";
 import { composeWithDevTools } from 'redux-devtools-extension'
-import wsMiddleware from "./features/middleware/ws.middleware";
+import wsMiddleware from "./features/socket/socket.middleware";
 import createSagaMiddleware from 'redux-saga'
 import rootSaga from './rootSaga';
 

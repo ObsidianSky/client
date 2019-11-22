@@ -31,9 +31,18 @@ export async function authenticate({email, password}: {email: string, password: 
 }
 
 export async function getChatList(memberId: string): Promise<any> {
-    return await api.get(`/chat/${memberId}`);
+    return await api.get(`/user/chat-list/${memberId}`);
 }
+
+export async function getChat(chatId: string): Promise<any> {
+    return await api.get(`/chat/${chatId}`);
+}
+
 
 export async function getUser(userId: string): Promise<any> {
     return await api.get(`/user/${userId}`);
+}
+
+export async function getMessages(chatId: string): Promise<any> {
+    return await api.get(`/message/${chatId}`);
 }

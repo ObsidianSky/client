@@ -1,0 +1,1 @@
+export const SOCKET_IN_NEW_MESSAGE = 'NEW_MESSAGE';

@@ -17,14 +17,12 @@ class Chat extends Component<{ messages: MessageModel[] }> {
 
     render() {
         return (
-            <>
                 <div className="chat-wrapper">
                     <div className="chat" ref={this.chatRef}>
                         {this.props.messages.map(message => <div className="chat-message" key={message.id}><Message
                             message={message}/></div>)}
                     </div>
                 </div>
-            </>
         );
     }
 }

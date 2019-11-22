@@ -7,8 +7,8 @@ class Message extends Component<{message: MessageModel}> {
         const { message } = this.props;
         return (
             <div className="message">
-                <div className="name">{message.userName}</div>
-                <div className="text">{message.message}</div>
+                <div className="name">{message.author.name}</div>
+                <div className="text">{message.content}</div>
             </div>
         );
     }

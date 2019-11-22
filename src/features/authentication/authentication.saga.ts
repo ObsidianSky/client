@@ -7,6 +7,8 @@ import {
     userLogInPendingAction,
     userLogInSuccessAction
 } from './authentication.actions';
+import localStorageService from '../../localstorage';
+import { AUTH_LOCAL_STORAGE_KEY } from './authentication.constants';
 
 function* authenticateSaga(action) {
     yield put(userLogInPendingAction());
@@ -15,11 +17,12 @@ function* authenticateSaga(action) {
         const response = yield call(authenticate, action.payload);
         yield put(userLogInSuccessAction(response));
 
+        localStorageService.set(AUTH_LOCAL_STORAGE_KEY, {userId: response.userId, token: response.token});
+
         return true;
     } catch (e) {
         yield put(userLogInFailedAction(e.errorMessage));
     }
-
 }
 
 

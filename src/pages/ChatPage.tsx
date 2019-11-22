@@ -1,41 +1,46 @@
-import React, {Component} from 'react';
-import NewMessageForm from "../components/NewMessageForm";
-import {connect} from "react-redux";
-import ChatContainer from "../containers/ChatContainer";
-import { Redirect } from 'react-router-dom';
-import ActiveUsersContainer from "../containers/ActiveUsersContainer";
-import {wsConnect, wsSetName} from "../features/middleware/ws.actions";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { StoreState } from '../rootReducer';
+import { getMessagesAction } from '../features/chat/chat.actions';
+import Chat from '../components/chat/Chat';
+import NewMessageForm from '../components/NewMessageForm';
+import { socketSendMessage } from '../features/socket/socket.actions';
+import { MessageModel } from '../features/chat/chat.models';
 
-
-class ChatPage extends Component<{ name, dispatch: Function }> {
+class ChatPage extends Component<{match: any, pending: boolean, messages: MessageModel[], getMessages: any, sendMessage: any}> {
     componentDidMount(): void {
-        this.props.dispatch(wsConnect('ws://localhost:8081'));
-        if (this.props.name) {
-            this.props.dispatch(wsSetName(this.props.name));
-        }
+        this.props.getMessages();
     }
 
     render() {
-        const chat = <div className="app">
-            <div className="main">
-                <div className="chat-section">
-                    <ChatContainer/>
-                </div>
-                <div className="new-message-section">
-                    <NewMessageForm dispatch={this.props.dispatch}/>
-                </div>
+        const chatBlock = <>
+            <Chat messages={this.props.messages}/>
+            <NewMessageForm onMessageSubmit={this.props.sendMessage} />
+        </>;
+        return (
+            <div>
+                { this.props.pending ? <div>Loading...</div> : chatBlock}
             </div>
-            <div className="sidebar-section">
-                <ActiveUsersContainer/>
-            </div>
-        </div>;
-
-        return this.props.name ? chat : <Redirect to="/login/"/>;
+        );
     }
 }
 
-const mapState = (state) => {
-    return {name: state.user && state.user.name}
+const mapState = (state: StoreState) => ({
+   messages: state.chat.messages,
+   pending: state.chat.pending
+});
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        getMessages: () => dispatch(getMessagesAction(ownProps.match.params.chatId)),
+        sendMessage: (message) => dispatch(socketSendMessage({
+            message,
+            chatId: ownProps.match.params.chatId
+        })),
+    }
 };
 
-export default connect(mapState, null)(ChatPage);
+export default connect(
+    mapState,
+    mapDispatchToProps
+)(ChatPage);

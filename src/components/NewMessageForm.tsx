@@ -1,9 +1,8 @@
-import React, {useState} from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import './NewMessageForm.scss';
-import {wsSendMessage} from "../features/middleware/ws.actions";
 import Button from "./Button";
 
-const NewMessageForm = ({dispatch}: { dispatch: Function }) => {
+const NewMessageForm: FunctionComponent<{ onMessageSubmit: (string) => any }> = ({onMessageSubmit}) => {
     const [text, setText]: [string, Function] = useState('');
 
     const onTextChangeHandler = (event) => {
@@ -12,7 +11,7 @@ const NewMessageForm = ({dispatch}: { dispatch: Function }) => {
 
     const formSubmitHandler = (event) => {
         event.preventDefault();
-        dispatch(wsSendMessage(text));
+        onMessageSubmit(text);
         setText('');
     };
 

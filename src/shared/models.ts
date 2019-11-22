@@ -7,6 +7,6 @@ export interface Action<T = any> {
     payload: T;
 }
 
-export interface WsOutAction extends Action {
+export interface SocketOutAction extends Action {
     command: string;
 }

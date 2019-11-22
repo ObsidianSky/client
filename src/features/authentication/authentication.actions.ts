@@ -20,6 +20,6 @@ export function userLogInFailedAction(errorMessage: string): Action<string> {
     return createAction(LOGIN_FAILED, errorMessage);
 }
 
-export function userLogInSuccessAction({token}): Action<{token: string}> {
-    return createAction(LOGIN_SUCCESS, {token});
+export function userLogInSuccessAction({token, userId}): Action<{token: string}> {
+    return createAction(LOGIN_SUCCESS, {token, userId});
 }
