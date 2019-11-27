@@ -4,14 +4,15 @@ import { Avatar, List } from 'antd';
 import { StoreState } from '../rootReducer';
 import { ChatModel } from '../features/chat-list/chat-list.models';
 import { Link } from 'react-router-dom';
+import { getChatName, getNameAbbr } from '../services/utils';
 
-function getChatName(chat: ChatModel) {
-    return chat.members.length > 2 ? chat.name : 'Name of your friend';
+function getAvatarText(chat: ChatModel, userId: string) {
+    return chat.members.length > 2 ? null : getNameAbbr(getChatName(chat, userId));
 }
 
 const ChatListPage = () => {
     const chatList = useSelector((state: StoreState) => state.chatList.data);
-    const chatListLoading = useSelector((state: StoreState) => state.chatList.pending);
+    const userId = useSelector((state: StoreState) => state.user.user && state.user.user.id);
 
     const chatListJSX = <List
         itemLayout="horizontal"
@@ -20,8 +21,8 @@ const ChatListPage = () => {
           <Link to={`/chat/${chat.id}`}>
             <List.Item>
                 <List.Item.Meta
-                    avatar={<Avatar>C</Avatar>}
-                    title={getChatName(chat)}
+                    avatar={<Avatar>{getAvatarText(chat, userId)}</Avatar>}
+                    title={getChatName(chat, userId)}
                     description="Last message will be here"
                 />
             </List.Item>
@@ -31,10 +32,11 @@ const ChatListPage = () => {
 
     return (
         <>
-            {chatListLoading ? <div>'Loading...'</div> : chatListJSX}
+            {chatList && userId ? chatListJSX : <div>'Loading...'</div>}
         </>
     );
 
 };
+
 
 export default ChatListPage;

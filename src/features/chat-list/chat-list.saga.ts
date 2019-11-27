@@ -1,5 +1,5 @@
 import { put, takeEvery, call } from 'redux-saga/effects'
-import { getChatList } from '../../api/api';
+import { getChatList } from '../../services/api/api';
 import { CHAT_LIST_SAGA, chatListFailedAction, chatListPendingAction, chatListSuccessAction } from './chat-list.actions';
 
 export function* chatListResolveSaga(action) {

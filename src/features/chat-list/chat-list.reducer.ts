@@ -4,7 +4,7 @@ import { CHAT_LIST_FAILED, CHAT_LIST_PENDING, CHAT_LIST_SUCCESS } from './chat-l
 
 export interface ChatListState {
     pending: boolean;
-    data: ChatModel;
+    data: ChatModel[];
     errorMessage: string;
 }
 

@@ -4,30 +4,12 @@ import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux'
-import configureStore, { history } from "./configureStore";
-import { ConnectedRouter } from "connected-react-router";
-import { Route, Switch } from 'react-router';
-import LoginPage from './pages/LoginPage';
-import ChatListPage from './pages/ChatListPage';
-import PageNotFound from './pages/PageNotFound';
-import authenticationRequiredHOC from './containers/authRequired.hoc';
-import ChatPage from './pages/ChatPage';
-
+import configureStore from "./configureStore";
 const store = configureStore();
 
 ReactDOM.render(
     <Provider store={store}>
-        <App store={store}>
-            <ConnectedRouter history={history}>
-                <Switch>
-                    <Route path="/" exact component={LoginPage}/>
-                    <Route path="/login" component={LoginPage}/>
-                    <Route path="/chat/:chatId" component={ChatPage}/>
-                    <Route path="/chat-list" component={authenticationRequiredHOC(ChatListPage)}/>
-                    <Route component={PageNotFound}/>
-                </Switch>
-            </ConnectedRouter>
-        </App>
+        <App store={store}/>
     </Provider>,
     document.getElementById('root')
 );

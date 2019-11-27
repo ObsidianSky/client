@@ -1,8 +1,5 @@
-import {Identifiable} from "../../shared/models";
-
 export interface UserModel {
+    id: string;
     name: string;
     email: string;
 }
-
-export type IdentifiableUser = UserModel & Identifiable;

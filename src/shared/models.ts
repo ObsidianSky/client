@@ -1,7 +1,3 @@
-export interface Identifiable {
-    id: number;
-}
-
 export interface Action<T = any> {
     type: string;
     payload: T;

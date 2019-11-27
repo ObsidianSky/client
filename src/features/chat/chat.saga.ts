@@ -1,5 +1,5 @@
 import { call, put, take } from '@redux-saga/core/effects';
-import * as api from '../../api/api';
+import * as api from '../../services/api/api';
 import {
     GET_MESSAGES,
     getMessagesFailedAction,

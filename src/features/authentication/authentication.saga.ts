@@ -1,5 +1,5 @@
 import { put, take, call, fork, cancel } from 'redux-saga/effects'
-import { authenticate } from '../../api/api';
+import { authenticate } from '../../services/api/api';
 import {
     LOGIN,
     LOGIN_FAILED,
@@ -7,8 +7,10 @@ import {
     userLogInPendingAction,
     userLogInSuccessAction
 } from './authentication.actions';
-import localStorageService from '../../localstorage';
+import localStorageService from '../../services/localstorage';
 import { AUTH_LOCAL_STORAGE_KEY } from './authentication.constants';
+import { history } from '../../configureStore';
+import { push } from 'connected-react-router';
 
 function* authenticateSaga(action) {
     yield put(userLogInPendingAction());
@@ -18,6 +20,10 @@ function* authenticateSaga(action) {
         yield put(userLogInSuccessAction(response));
 
         localStorageService.set(AUTH_LOCAL_STORAGE_KEY, {userId: response.userId, token: response.token});
+
+        const from = history.location.state.from;
+
+        yield put(push(from || '/'));
 
         return true;
     } catch (e) {

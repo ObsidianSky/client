@@ -1,0 +1,15 @@
+.chat-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  .chat-container {
+    flex: 1 1 auto;
+    height: 100%;
+  }
+
+  .message-form-container {
+    flex: 0 0 0;
+    max-height: 300px;
+  }
+}

@@ -6,6 +6,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import wsMiddleware from "./features/socket/socket.middleware";
 import createSagaMiddleware from 'redux-saga'
 import rootSaga from './rootSaga';
+import logger from 'redux-logger'
 
 export const history = createBrowserHistory();
 
@@ -15,7 +16,8 @@ export default function configureStore(preloadedState?) {
     const middlewares = [
         wsMiddleware,
         sagaMiddleware,
-        routerMiddleware(history)
+        routerMiddleware(history),
+        logger
     ];
 
     const store = createStore(

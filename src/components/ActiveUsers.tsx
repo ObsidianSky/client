@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import { IdentifiableUser } from '../features/user/user.models';
+import { UserModel } from '../features/user/user.models';
 
 
-class ActiveUsers extends Component<{users: IdentifiableUser[]}> {
+
+class ActiveUsers extends Component<{users: UserModel[]}> {
     render() {
         return (
             <div>

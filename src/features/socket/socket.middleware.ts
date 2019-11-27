@@ -66,7 +66,6 @@ const socketMiddleware = () => {
                 socket.send(wsAction);
                 break;
             default:
-                console.log('the next action:', action);
                 return next(action);
         }
     };
