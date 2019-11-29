@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from "connected-react-router";
 import { bindActionCreators } from 'redux';
-import { StoreState } from '../rootReducer';
+import { StoreState } from '../../rootReducer';
 
 export default function authenticationRequiredHOC(ComposedComponent) {
     class Authenticate extends React.Component<{ isAuthenticated: boolean, redirect: Function}> {

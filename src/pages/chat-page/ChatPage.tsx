@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { StoreState } from '../../rootReducer';
 import { getMessagesAction } from '../../features/chat/chat.actions';
 import Chat from '../../components/chat/Chat';
-import NewMessageForm from '../../components/new-message-form/NewMessageForm';
+import NewMessageForm from '../../components/chat/new-message-form/NewMessageForm';
 import { socketSendMessage } from '../../features/socket/socket.actions';
 import { MessageModel } from '../../features/chat/chat.models';
 import './ChatPage.scss';
@@ -11,6 +11,7 @@ import { PageHeader } from 'antd';
 import { ChatModel } from '../../features/chat-list/chat-list.models';
 import { getChatName } from '../../services/utils';
 import { push } from 'connected-react-router';
+import DirectChatHeader from '../../components/chat/direct-chat-header/DirectChatHeader';
 
 interface ChatPageProps {
     match: any,
@@ -34,12 +35,7 @@ class ChatPage extends Component<ChatPageProps> {
             <div>
                 {this.props.currentChat && this.props.userId ? (
                     <div className="chat-page">
-                        <PageHeader
-                            style={{
-                                border: '1px solid rgb(235, 237, 240)',
-                            }}
-                            onBack={this.props.goBack}
-                            title={getChatName(this.props.currentChat, this.props.userId)}/>
+                        <DirectChatHeader goBack={this.props.goBack} chat={this.props.currentChat}/>
                         <div className="chat-container">
                             <Chat messages={this.props.messages} userId={this.props.userId}/>
                         </div>

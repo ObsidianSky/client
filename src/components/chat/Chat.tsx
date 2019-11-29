@@ -1,7 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import "./Chat.scss"
-import {MessageModel} from "../../features/chat/chat.models";
-import Message from "../message/Message";
+import { MessageModel } from "../../features/chat/chat.models";
+import Message from "./message/Message";
+import { Position } from '../shared/positions.enum';
 
 interface ChatProps {
     messages: MessageModel[];
@@ -16,12 +17,22 @@ class Chat extends Component<ChatProps> {
         this.chatRef = React.createRef();
     }
 
-    componentDidMount(): void {
-        this.chatRef.current.scrollTop = 80000;
+    goToBottom() {
+        const chatDOM = this.chatRef.current;
+
+        chatDOM.scrollTo(0, chatDOM.scrollHeight);
     }
 
-    getMessagePosition = (authorId: string, userId: string): 'left' | 'right' => {
-        return authorId === userId ? 'right' : 'left';
+    componentDidMount(): void {
+        this.goToBottom();
+    }
+
+    componentDidUpdate(): void {
+        this.goToBottom();
+    }
+
+    getMessagePosition = (authorId: string, userId: string): Position.Left | Position.Right => {
+        return authorId === userId ? Position.Right : Position.Left;
     };
 
     render() {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect, useLocation} from 'react-router-dom';
-import { StoreState } from '../rootReducer';
+import { StoreState } from '../../rootReducer';
 import { useSelector } from 'react-redux';
 
 

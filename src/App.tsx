@@ -12,7 +12,7 @@ import LoginPage from './pages/LoginPage';
 import ChatPage from './pages/chat-page/ChatPage';
 import ChatListPage from './pages/ChatListPage';
 import PageNotFound from './pages/PageNotFound';
-import AuthenticatedRoute from './containers/AuthenticatedRoute';
+import AuthenticatedRoute from './components/routing/AuthenticatedRoute';
 
 const App = ({store}) => {
     const [tokenResolved, setTokenResolve] = useState();

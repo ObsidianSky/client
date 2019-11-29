@@ -20,6 +20,7 @@ const socketMiddleware = () => {
     };
 
     const onMessage = store => (event, data) => {
+        console.log(data);
         handleSocketMessage(data, store.dispatch);
     };
 
