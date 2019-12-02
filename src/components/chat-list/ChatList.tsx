@@ -2,16 +2,17 @@ import React from 'react';
 import { List } from 'antd';
 import { ChatModel } from '../../features/chat-list/chat-list.models';
 import { Link } from 'react-router-dom';
-import { getChatName } from '../../services/utils';
+import { getDirectChatName } from '../../services/utils';
 import './ChatList.scss';
-import DirectChatAvatar from '../../containers/chat/OnlineBadge';
+import DirectAvatar from '../direct-avatar/DirectAvatar';
+import OnlineBadge from '../../containers/chat/OnlineBadge';
 
 interface ChatListProps {
     chatList: ChatModel[];
     userId: string;
 }
 
-
+const getDirectChatMemberId = chat => chat.members[0].id;
 
 const ChatList = ({chatList, userId}: ChatListProps) => {
     return (
@@ -23,9 +24,11 @@ const ChatList = ({chatList, userId}: ChatListProps) => {
                     <List.Item>
                         <List.Item.Meta
                             avatar={
-                                <DirectChatAvatar chat={chat}/>
+                                <OnlineBadge userId={getDirectChatMemberId(chat)}>
+                                    <DirectAvatar chat={chat}/>
+                                </OnlineBadge>
                             }
-                            title={getChatName(chat)}
+                            title={getDirectChatName(chat)}
                             description="Last message will be here"
                         />
                     </List.Item>

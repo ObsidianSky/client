@@ -1,7 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { MessageModel } from "../../../features/chat/chat.models";
 import './Message.scss'
-import { Position } from '../shared/positions.enum';
+import { Position } from '../../shared/positions.enum';
+
 
 interface MessageProps {
     message: MessageModel;

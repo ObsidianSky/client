@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState } from 'react';
 import './NewMessageForm.scss';
-import Button from '../Button';
 import { Input } from 'antd';
+import Button from '../../Button';
  const { TextArea } = Input;
 
 const NewMessageForm: FunctionComponent<{ onMessageSubmit: (string) => any }> = ({onMessageSubmit}) => {
