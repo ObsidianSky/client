@@ -1,10 +1,11 @@
 import React, { FunctionComponent, useEffect, useState, useRef, ReactNode } from 'react';
 import ReactDOM from 'react-dom';
+import ContextMenuContainer from './ContextMenuContainer';
 
 interface ContextMenuTriggerProps {
     data?: any;
     children: ReactNode,
-    content: ReactNode
+    content: (data: any, close: () => any) => ReactNode
 }
 
 const ContextMenuTrigger: FunctionComponent<ContextMenuTriggerProps> = ({children, data, content}) => {
@@ -23,32 +24,35 @@ const ContextMenuTrigger: FunctionComponent<ContextMenuTriggerProps> = ({childre
             setIsVisible(true);
         };
 
-        containerRef.current.addEventListener('contextmenu', handleContextMenu)
+        containerRef.current.addEventListener('contextmenu', handleContextMenu);
 
-        // TODO Clean up event listeners
+        return function handleContextMenuCleanup() {
+            containerRef.current.removeEventListener('contextmenu', handleContextMenu);
+        }
     }, []);
 
+
+    // TODO probably we should extract rendering functionality
     useEffect(() => {
         const contextMenuContainer = document.getElementById('context-menu-o-lo-lo');
 
         if (isVisible) {
-            const style = {
-                position: 'absolute' as 'absolute',
-                left: x,
-                top: y,
-                zIndex: 10
-            };
-
             ReactDOM.render(
-                <div style={style}>
-                    {content}
-                </div>,
+                <ContextMenuContainer x={x} y={y}>
+                    {content(data, () => {
+                        setIsVisible(false);
+                    })}
+                </ContextMenuContainer>,
+                contextMenuContainer
+            );
+        } else {
+            ReactDOM.render(
+                null,
                 contextMenuContainer
             );
         }
 
     }, [ x, y, isVisible ]);
-
 
     return (
         <div ref={containerRef}>

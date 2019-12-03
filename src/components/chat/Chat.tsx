@@ -4,12 +4,13 @@ import { MessageModel } from "../../features/chat/chat.models";
 import Message from "./message/Message";
 import { Position } from '../shared/positions.enum';
 import ContextMenuTrigger from '../context-menu/ContextMenuTrigger';
-import { Menu } from 'antd';
+import { Button, Menu } from 'antd';
 
 
 interface ChatProps {
     messages: MessageModel[];
     userId: string;
+    onMessageAction: any;
 }
 
 class Chat extends Component<ChatProps> {
@@ -38,26 +39,31 @@ class Chat extends Component<ChatProps> {
         return authorId === userId ? Position.Right : Position.Left;
     };
 
-    contextMenu = (
-        <div>
-            <Menu>
-                <Menu.Item>Edit</Menu.Item>
-                <Menu.Item>Delete</Menu.Item>
-            </Menu>
-        </div>
+    handleMessageAction(type: string, message: MessageModel, closeContextMenu): void {
+        this.props.onMessageAction(type, message);
+        closeContextMenu();
+    }
+
+    contextMenuFn = (data: MessageModel, close) => (
+        <Menu>
+            <Menu.Item><Button type="link" onClick={() => this.handleMessageAction('Edit', data, close)}>Edit</Button></Menu.Item>
+            <Menu.Item><Button type="link" onClick={() => this.handleMessageAction('Delete', data, close)}>Delete</Button></Menu.Item>
+        </Menu>
     );
 
     render() {
         return (
-                <div className="chat-wrapper">
-                    <div className="chat" ref={this.chatRef}>
-                        {this.props.messages.map(message => <div className={`chat-message chat-message_${this.getMessagePosition(message.authorId, this.props.userId)}`} key={message.id}>
-                            <ContextMenuTrigger content={this.contextMenu}>
-                                <Message message={message} arrowPosition={this.getMessagePosition(message.authorId, this.props.userId)}/>
-                            </ContextMenuTrigger>
-                        </div>)}
-                    </div>
+            <div className="chat-wrapper">
+                <div className="chat" ref={this.chatRef}>
+                    {this.props.messages.map(message => <div
+                        className={`chat-message chat-message_${this.getMessagePosition(message.authorId, this.props.userId)}`}
+                        key={message.id}>
+                        <ContextMenuTrigger content={this.contextMenuFn} data={message}>
+                            <Message message={message} arrowPosition={this.getMessagePosition(message.authorId, this.props.userId)}/>
+                        </ContextMenuTrigger>
+                    </div>)}
                 </div>
+            </div>
         );
     }
 }
