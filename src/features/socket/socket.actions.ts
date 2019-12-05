@@ -15,5 +15,5 @@ export const socketConnectedAction = () => ({ type: 'SOCKET_CONNECTED' });
 export const socketDisconnectAction = () => ({ type: 'SOCKET_DISCONNECT' });
 export const socketDisconnectedAction = () => ({ type: 'SOCKET_DISCONNECTED' });
 
-export const socketSendMessage: socketOutActionCreator = (payload) => ({ type: 'SOCKET_MESSAGE', command: 'MESSAGE', payload: payload});
-export const socketEditMessage: socketOutActionCreator = (payload) => ({ type: 'SOCKET_MESSAGE', command: 'EDIT', payload: payload});
+export const socketSendMessage: socketOutActionCreator = (payload) => ({ type: 'SOCKET_MESSAGE', command: 'NEW_MESSAGE', payload: payload});
+export const socketEditMessage: socketOutActionCreator = (payload) => ({ type: 'SOCKET_MESSAGE', command: 'EDIT_MESSAGE', payload: payload});

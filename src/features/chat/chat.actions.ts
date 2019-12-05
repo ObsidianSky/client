@@ -3,6 +3,7 @@ import { createAction } from "../../utils";
 import { Action } from "../../shared/models";
 
 export const MESSAGE_RECEIVED = 'MESSAGE_RECEIVED';
+export const MESSAGE_EDITED = 'MESSAGE_EDITED';
 
 export const GET_MESSAGES_PENDING = 'GET_MESSAGES_PENDING';
 export const GET_MESSAGES_FAILED = 'GET_MESSAGES_FAILED';
@@ -26,7 +27,10 @@ export function getMessagesAction(chatId: string): Action {
     return createAction(GET_MESSAGES, chatId);
 }
 
-export function receiveMessageAction(payload: MessageModel): Action<MessageModel> {
+export function receivedMessageAction(payload: MessageModel): Action<MessageModel> {
     return createAction(MESSAGE_RECEIVED, payload);
 }
 
+export function editedMessageAction(payload: MessageModel): Action<MessageModel> {
+    return createAction(MESSAGE_EDITED, payload);
+}

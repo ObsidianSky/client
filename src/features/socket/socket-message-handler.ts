@@ -1,6 +1,11 @@
-import { receiveMessageAction } from "../chat/chat.actions";
+import { editedMessageAction, receivedMessageAction } from "../chat/chat.actions";
 import { Action } from "../../shared/models";
-import { SOCKET_IN_NEW_MESSAGE, SOCKET_IN_USER_OFFLINE, SOCKET_IN_USER_ONLINE } from './socket-in-messages.model';
+import {
+    SOCKET_IN_EDIT_MESSAGE,
+    SOCKET_IN_NEW_MESSAGE,
+    SOCKET_IN_USER_OFFLINE,
+    SOCKET_IN_USER_ONLINE
+} from './socket-in-messages.model';
 import { userOfflineAction, userOnlineAction } from '../users-online/users-online.actions';
 
 export function handleSocketMessage(message: Action, dispatch) {
@@ -16,13 +21,13 @@ export function handleSocketMessage(message: Action, dispatch) {
 function mapAction(message: Action): Action | null {
     switch(message.type) {
         case SOCKET_IN_NEW_MESSAGE:
-            return receiveMessageAction(message.payload);
+            return receivedMessageAction(message.payload);
         case SOCKET_IN_USER_ONLINE:
             return userOnlineAction(message.payload);
         case SOCKET_IN_USER_OFFLINE:
             return userOfflineAction(message.payload);
-        // case SKT_USER_CONNECTED:
-        //     return userConnected(message.payload);
+        case SOCKET_IN_EDIT_MESSAGE:
+            return editedMessageAction(message.payload);
         // case SKT_USER_DISCONNECTED:
         //     return userDisconnected(message.payload);
         // case SKT_ACTIVE_USERS:

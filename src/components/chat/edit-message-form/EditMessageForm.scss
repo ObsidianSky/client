@@ -1,0 +1,10 @@
+.edit-panel {
+  display: flex;
+  align-items: center;
+
+  &__text {
+    flex: 1 0 0;
+    padding-left: 10px;
+  }
+}
+

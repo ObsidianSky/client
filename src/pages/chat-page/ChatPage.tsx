@@ -10,6 +10,7 @@ import './ChatPage.scss';
 import { ChatModel } from '../../features/chat-list/chat-list.models';
 import { push } from 'connected-react-router';
 import DirectChatHeader from '../../components/chat/direct-chat-header/DirectChatHeader';
+import EditMessageForm from '../../components/chat/edit-message-form/EditMessageForm';
 
 interface ChatPageProps {
     match: any,
@@ -34,6 +35,8 @@ class ChatPage extends Component<ChatPageProps, { messageToEdit: MessageModel}> 
 
         this.handleMessageAction = this.handleMessageAction.bind(this);
         this.handleMessageSubmit = this.handleMessageSubmit.bind(this);
+        this.cancelEditing = this.cancelEditing.bind(this);
+        this.handleEditedMessageSubmit = this.handleEditedMessageSubmit.bind(this);
     }
 
 
@@ -49,32 +52,44 @@ class ChatPage extends Component<ChatPageProps, { messageToEdit: MessageModel}> 
         }
     }
 
-    handleMessageSubmit(messageText: string): void {
+    cancelEditing(): void {
+        this.setState({messageToEdit: null})
+    }
+
+    handleEditedMessageSubmit(messageText: string): void {
         const messageToEdit = this.state.messageToEdit;
 
-        if (!messageToEdit) {
-            this.props.sendMessage(messageText);
-        } else {
-            if (messageText !== messageToEdit.content) {
-                this.props.editMessage(messageText, messageToEdit.id)
-            }
-
-            this.setState({messageToEdit: null})
+        if (messageText !== messageToEdit.content) {
+            this.props.editMessage(messageText, messageToEdit.id)
         }
+
+        this.cancelEditing();
+    }
+
+    handleMessageSubmit(messageText: string): void {
+        this.props.sendMessage(messageText);
     }
 
     render() {
+        const messageForm = this.state.messageToEdit ?
+            <EditMessageForm message={this.state.messageToEdit.content}
+                             onMessageSubmit={this.handleEditedMessageSubmit}
+                             onCancel={this.cancelEditing}/> :
+            <NewMessageForm onMessageSubmit={this.handleMessageSubmit}/>;
+
         return (
             <div>
                 {this.props.currentChat && this.props.userId ? (
                     <div className="chat-page">
-                        <DirectChatHeader goBack={this.props.goBack} chat={this.props.currentChat}/>
+                        <DirectChatHeader goBack={this.props.goBack}
+                                          chat={this.props.currentChat}/>
                         <div className="chat-container">
-                            <Chat messages={this.props.messages} userId={this.props.userId}
+                            <Chat messages={this.props.messages}
+                                  userId={this.props.userId}
                                   onMessageAction={this.handleMessageAction}/>
                         </div>
                         <div className="message-form-container">
-                            <NewMessageForm initialValue={this.state.messageToEdit && this.state.messageToEdit.content} onMessageSubmit={this.handleMessageSubmit}/>
+                            {messageForm}
                         </div>
                     </div>
                 ) : <div>Loading...</div>}
@@ -97,10 +112,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             message,
             chatId: ownProps.match.params.chatId
         })),
-        editMessage: (newMessage, id) => dispatch(socketEditMessage({
-            newMessage,
-            id,
-            chatId: ownProps.match.params.chatId
+        editMessage: (message, id) => dispatch(socketEditMessage({
+            message,
+            id
         })),
         goBack: () => dispatch(push('/chat-list'))
     }

@@ -1,5 +1,11 @@
 import { MessageModel } from "./chat.models";
-import { GET_MESSAGES_FAILED, GET_MESSAGES_PENDING, GET_MESSAGES_SUCCESS, MESSAGE_RECEIVED } from "./chat.actions";
+import {
+    GET_MESSAGES_FAILED,
+    GET_MESSAGES_PENDING,
+    GET_MESSAGES_SUCCESS,
+    MESSAGE_EDITED,
+    MESSAGE_RECEIVED
+} from "./chat.actions";
 import {Action} from "../../shared/models";
 
 export interface ChatState {
@@ -18,6 +24,12 @@ export function chatReducer(state: ChatState = initialState, action: Action): Ch
     switch(action.type) {
         case MESSAGE_RECEIVED:
             return {...state, messages: [...state.messages, action.payload]};
+        case MESSAGE_EDITED:
+            const messageToReplaceIndex = state.messages.findIndex((message) => message.id === action.payload.id);
+            const newMessages = [...state.messages];
+            newMessages[messageToReplaceIndex] =  action.payload;
+
+            return {...state, messages: newMessages};
         case GET_MESSAGES_PENDING:
             return {messages: [], pending: true, errorMessage: null};
         case GET_MESSAGES_FAILED:

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState, useRef } from 'react';
 import './NewMessageForm.scss';
 import { Input } from 'antd';
 import Button from '../../Button';
@@ -12,6 +12,11 @@ interface NewMessageForm {
 
 const NewMessageForm: FunctionComponent<NewMessageForm> = ({onMessageSubmit, initialValue}) => {
     const [ text, setText ]: [ string, Function ] = useState('');
+    const textAreaRef = useRef(null);
+
+    useEffect(() => {
+        textAreaRef && textAreaRef.current.focus();
+    }, []);
 
     useEffect(() => {
         if (initialValue) {
@@ -38,10 +43,14 @@ const NewMessageForm: FunctionComponent<NewMessageForm> = ({onMessageSubmit, ini
     };
 
     return (
-        <div className="new-message-container-wrapper">
+        <div className="new-message-form-wrapper">
             <form className="new-message-form" onSubmit={formSubmitHandler}>
-                <TextArea className="textarea" onPressEnter={handleEnterPress} onChange={onTextChangeHandler}
-                          value={text} autoSize={{maxRows: 4, minRows: 2}}/>
+                <TextArea className="textarea"
+                          onPressEnter={handleEnterPress}
+                          onChange={onTextChangeHandler}
+                          value={text}
+                          autoSize={{maxRows: 4, minRows: 2}}
+                          ref={textAreaRef}/>
                 <Button type='submit' className='button' text="Send"/>
             </form>
         </div>
@@ -49,4 +58,4 @@ const NewMessageForm: FunctionComponent<NewMessageForm> = ({onMessageSubmit, ini
 
 };
 
-export default NewMessageForm;
+export default React.forwardRef(NewMessageForm);

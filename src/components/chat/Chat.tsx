@@ -44,12 +44,24 @@ class Chat extends Component<ChatProps> {
         closeContextMenu();
     }
 
-    contextMenuFn = (data: MessageModel, close) => (
-        <Menu>
-            <Menu.Item><Button type="link" onClick={() => this.handleMessageAction('Edit', data, close)}>Edit</Button></Menu.Item>
-            <Menu.Item><Button type="link" onClick={() => this.handleMessageAction('Delete', data, close)}>Delete</Button></Menu.Item>
-        </Menu>
-    );
+    contextMenuFn = (message: MessageModel, close) => {
+        if (message.authorId === this.props.userId) {
+            return (
+                <Menu>
+                    <Menu.Item>
+                        <Button type="link"
+                                onClick={() => this.handleMessageAction('Edit', message, close)}>Edit</Button>
+                    </Menu.Item>
+                    <Menu.Item>
+                        <Button type="link"
+                                onClick={() => this.handleMessageAction('Delete', message, close)}>Delete</Button>
+                    </Menu.Item>
+                </Menu>
+            )
+        }
+
+        return null;
+    };
 
     render() {
         return (
@@ -59,7 +71,8 @@ class Chat extends Component<ChatProps> {
                         className={`chat-message chat-message_${this.getMessagePosition(message.authorId, this.props.userId)}`}
                         key={message.id}>
                         <ContextMenuTrigger content={this.contextMenuFn} data={message}>
-                            <Message message={message} arrowPosition={this.getMessagePosition(message.authorId, this.props.userId)}/>
+                            <Message message={message}
+                                     arrowPosition={this.getMessagePosition(message.authorId, this.props.userId)}/>
                         </ContextMenuTrigger>
                     </div>)}
                 </div>

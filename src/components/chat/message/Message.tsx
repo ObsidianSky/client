@@ -14,6 +14,7 @@ const Message: FunctionComponent<MessageProps> = ({message, arrowPosition}) => {
         <div className={`message message_${arrowPosition}`}>
             <div className="name">{message.author.name}</div>
             <pre className="text">{message.content}</pre>
+            <div className="meta">{message.edited && 'edited'}</div>
         </div>
     );
 };
