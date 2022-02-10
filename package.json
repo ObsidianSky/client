@@ -43,7 +43,7 @@
   "devDependencies": {
     "@types/axios": "^0.14.0",
     "@types/react-router-dom": "^5.1.2",
-    "node-sass": "^4.13.0",
+    "node-sass": "^7.0.0",
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6"
   }
